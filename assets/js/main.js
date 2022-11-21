@@ -227,3 +227,23 @@
   new PureCounter();
 
 })()
+
+// form data to drive
+
+$("#submit-form").submit((e)=>{
+  e.preventDefault()
+  $.ajax({
+      url:"https://script.google.com/macros/s/AKfycbzYVzhilz5L4YiqA0iLerD0BfN8qufy8xDF57qqiajw3Ntywa6yDR14rcZN4fXcU4t_iA/exec",
+      data:$("#submit-form").serialize(),
+      method:"post",
+      success:function (response){
+          alert("Form submitted successfully")
+          window.location.reload()
+          //window.location.href="https://google.com"
+      },
+      error:function (err){
+          alert("Something Error")
+
+      }
+  })
+})
