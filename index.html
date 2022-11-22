@@ -590,35 +590,32 @@
                       </h5>
                     </div>
                     <div>
-                      <form action=""  role="form" class="email-form" id="submit-form">
+                      <form action="forms"  role="form" method="post" name="contact us" class="email-form" id="submit-form">
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name">
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email">
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
                             </div>
                           </div>
                           <div class="col-md-12">
                             <div class="form-group">
-                              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                              <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
                             </div>
                           </div>
-                          <div class="col-md-12 text-center my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                          <div class="col-md-12 text-center my-3" id="msg">
                           </div>
                           <div class="col-md-12 text-center">
-                            <button type="submit" class="button button-a button-big button-rouded">Send Message</button>
+                            <button type="submit" id="submit" class="button button-a button-big button-rouded">Send Message</button>
                           </div>
                         </div>
                       </form>
@@ -693,9 +690,65 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  $("form[name='contact us']").validate({
+      rules: {
+          name : {
+            required      : true,
+          },
+    email : {
+            required      : true,
+      email 		: true
+          },
+    mobile : {
+            required      : true,
+          },
+    message : {
+            required      : true,
+          },
+      },
+      messages: {
+          name       : "This field is required.",
+      },
+      submitHandler: function(form) {
+    jQuery('#msg').html('Please wait...');
+    jQuery('#form').attr('disabled',true);
+    jQuery.ajax({
+      url:'https://script.google.com/macros/s/AKfycbxL8k00W-vN-udsshNfsfS0zYBjZuc3F-suUnSGlIPySOzqh75TIGE7fFi2jjnpZLEx9A/exec',
+      type:'post',
+      data:jQuery('#submit-form').serialize(),
+      success:function(result){
+      console.log(result.result);
+      if(result.result =='success'){
+        Swal.fire(
+          'Success!',
+          'Will contact you soon',
+          'success'
+        );
+      }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        })
+        }
+      jQuery('#submit-form')[0].reset();
+      jQuery('#msg').html('Thank You');
+      jQuery('#submit').attr('disabled',false);
+      }
+    });
+      }
+  });
+  
+</script>
 
 </body>
 

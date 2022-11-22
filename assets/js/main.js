@@ -1,4 +1,3 @@
-
 (function() {
   "use strict";
 
@@ -228,22 +227,30 @@
 
 })()
 
-// form data to drive
 
-$("#submit-form").submit((e)=>{
-  e.preventDefault()
-  $.ajax({
-      url:"https://script.google.com/macros/s/AKfycbzYVzhilz5L4YiqA0iLerD0BfN8qufy8xDF57qqiajw3Ntywa6yDR14rcZN4fXcU4t_iA/exec",
-      data:$("#submit-form").serialize(),
-      method:"post",
-      success:function (response){
-          alert("Form submitted successfully")
-          window.location.reload()
-          //window.location.href="https://google.com"
-      },
-      error:function (err){
-          alert("Something Error")
+// validation
 
-      }
-  })
-})
+
+
+// // form data to drive
+
+// $("#submit-form").submit((e)=>{
+//   e.preventDefault()
+//   $.ajax({
+//       url:"https://script.google.com/macros/s/AKfycbzASGdjbDw_uTvgVIiozepp6tkuq_1wx0a296NrWebrnlOGKozgssag7vei7ZHfS50CNQ/exec",
+//       data:$("#submit-form").serialize(),
+//       method:"post",
+//       success:function (response){
+//           alert("Form submitted successfully")
+//           window.location.reload()
+//           //window.location.href="https://google.com"
+//       },
+//       error:function (err){
+//           alert("Something Error")
+
+//       }
+//   })
+// })
+
+
+
