@@ -490,35 +490,33 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="forms"  role="form" method="post" name="contact us" class="email-form" id="submit-form">
-                        <div class="row">
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name">
-                            </div>
+                      <div class="col-md-6 mail_right">
+                        <form name="contactForm" onsubmit="return validateForm()"  method="post" id="formid">
+              
+                          <div class="row">
+                              <input type="text" name="name" placeholder="Name">
+                              <div class="error" id="nameErr"></div>
+            
                           </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email">
-                            </div>
+                          <div class="row">
+                              <input type="text" name="email" placeholder="Email Address">
+                              <div class="error" id="emailErr"></div>
                           </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
-                            </div>
+                          <div class="row">
+                              <input type="text" name="mobile" maxlength="10" placeholder="Mobile Number">
+                              <div class="error" id="mobileErr"></div>
                           </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                            </div>
+                           <div class="row">
+                                      <textarea class="message"   name="message" rows="5" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="error" id="messageErr" ></div>
+                         
+                          
+                          <div class="row">
+                              <input type="submit" value="Submit" id="butsub">
                           </div>
-                          <div class="col-md-12 text-center my-3" id="msg">
-                          </div>
-                          <div class="col-md-12 text-center">
-                            <button type="submit" id="submit" class="button button-a button-big button-rouded">Send Message</button>
-                          </div>
-                        </div>
                       </form>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -597,57 +595,108 @@
   <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-  $("form[name='contact us']").validate({
-      rules: {
-          name : {
-            required      : true,
-          },
-    email : {
-            required      : true,
-      email 		: true
-          },
-    subject : {
-            required      : true,
-          },
-    message : {
-            required      : true,
-          },
-      },
-      messages: {
-          name       : "This field is required.",
-      },
-      submitHandler: function(form) {
-    jQuery('#msg').html('Please wait...');
-    jQuery('#form').attr('disabled',true);
-    jQuery.ajax({
-      url:'https://script.google.com/macros/s/AKfycbxL8k00W-vN-udsshNfsfS0zYBjZuc3F-suUnSGlIPySOzqh75TIGE7fFi2jjnpZLEx9A/exec',
-      type:'post',
-      data:jQuery('#submit-form').serialize(),
-      success:function(result){
-      console.log(result.result);
-      if(result.result =='success'){
-        Swal.fire(
-          'Success!',
-          'Will contact you soon',
-          'success'
-        );
-      }else{
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!',
-        })
+
+  <script>
+    // Defining a function to display error message
+    function printError(elemId, hintMsg) {
+        document.getElementById(elemId).innerHTML = hintMsg;
+    }
+    
+    // Defining a function to validate form 
+    function validateForm() {
+        // Retrieving the values of form elements 
+        var name = document.contactForm.name.value;
+        var email = document.contactForm.email.value;
+        var mobile = document.contactForm.mobile.value;
+        var message = document.contactForm.message.value;
+        
+    
+        
+      // Defining error variables with a default value
+        var nameErr = emailErr = mobileErr = messageErr = true;
+        
+        // Validate name
+        if(name == "") {
+            printError("nameErr", "Please enter your name");
+        } else {
+            var regex = /^[a-zA-Z\s]+$/;                
+            if(regex.test(name) === false) {
+                printError("nameErr", "Please enter a valid name");
+            } else {
+                printError("nameErr", "");
+                nameErr = false;
+            }
         }
-      jQuery('#submit-form')[0].reset();
-      jQuery('#msg').html('Thank You');
-      jQuery('#submit').attr('disabled',false);
-      }
-    });
-      }
-  });
-  
-</script>
+        
+        // Validate email address
+        if(email == "") {
+            printError("emailErr", "Please enter your email address");
+        } else {
+            // Regular expression for basic email validation
+            var regex = /^\S+@\S+\.\S+$/;
+            if(regex.test(email) === false) {
+                printError("emailErr", "Please enter a valid email address");
+            } else{
+                printError("emailErr", "");
+                emailErr = false;
+            }
+        }
+        
+        // Validate mobile number
+        if(mobile == "") {
+            printError("mobileErr", "Please enter your mobile number");
+        } else {
+            var regex = /^[1-9]\d{9}$/;
+            if(regex.test(mobile) === false) {
+                printError("mobileErr", "Please enter a valid 10 digit mobile number");
+            } else{
+                printError("mobileErr", "");
+                mobileErr = false;
+            }
+        }
+        
+        // Validate message
+
+        if(message == "") {
+				printError("messageErr", "Please enter the message");
+			}else{
+				printError("messageErr", "");
+				messageErr = false;
+			}
+        
+        // Validate gender
+    
+        
+        // Prevent the form from being submitted if there are any errors
+        if((nameErr || emailErr || mobileErr || messageErr) != true) {
+				var form = document.getElementById('formid');
+				var xhr = new XMLHttpRequest();
+				var data = new FormData(form);
+				console.log(data);
+				//Add extra data to form before submission.
+				// data.append("referer","https://example.com");
+				//open the request
+				xhr.open('POST','https://script.google.com/macros/s/AKfycbxL8k00W-vN-udsshNfsfS0zYBjZuc3F-suUnSGlIPySOzqh75TIGE7fFi2jjnpZLEx9A/exec')
+				//send the form data
+				xhr.send(data);
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == XMLHttpRequest.DONE) {
+						form.reset(); //reset form after AJAX success.
+					}
+				}
+				//Dont submit the form.
+				return false; 
+			}else{
+				return false;
+			}
+    };
+
+
+
+    
+    </script>
+
+
 
 </body>
 

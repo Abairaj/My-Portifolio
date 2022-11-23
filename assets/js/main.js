@@ -227,30 +227,3 @@
 
 })()
 
-
-// validation
-
-
-
-// // form data to drive
-
-// $("#submit-form").submit((e)=>{
-//   e.preventDefault()
-//   $.ajax({
-//       url:"https://script.google.com/macros/s/AKfycbzASGdjbDw_uTvgVIiozepp6tkuq_1wx0a296NrWebrnlOGKozgssag7vei7ZHfS50CNQ/exec",
-//       data:$("#submit-form").serialize(),
-//       method:"post",
-//       success:function (response){
-//           alert("Form submitted successfully")
-//           window.location.reload()
-//           //window.location.href="https://google.com"
-//       },
-//       error:function (err){
-//           alert("Something Error")
-
-//       }
-//   })
-// })
-
-
-
