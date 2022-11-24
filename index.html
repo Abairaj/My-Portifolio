@@ -682,6 +682,11 @@
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == XMLHttpRequest.DONE) {
 						form.reset(); //reset form after AJAX success.
+            Swal.fire(
+            'Success!',
+             'Thank You!',
+
+)
 					}
 				}
 				//Dont submit the form.
@@ -697,6 +702,7 @@
     </script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
